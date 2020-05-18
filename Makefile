@@ -50,7 +50,7 @@ exotic:
 		-v ${NOTEBOOKS}\
 		-v ${FIGURES}\
 		-v ${SCRIPTS}\
-		rreggiar/tidyr-studio
+		rreggiar/tidyr-studio:exotic
 
 rstudio:
 	@echo 'making rstudio session hosted at 127 0 0 1 8787 8787 for ${USER}:${USER_ID}'
