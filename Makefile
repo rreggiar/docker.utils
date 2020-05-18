@@ -37,20 +37,20 @@ plasma:
 		-v ${WET_LAB}\
 		rreggiar/tidyr-studio:aale
 
-exotic: DATA = '/public/groups/kimlab/exoTIC-biomarkers/data'
-exotic: NOTEBOOKS = '/public/groups/kimlab/exoTIC-biomarkers/notebooks'
-exotic: FIGURES = '/public/groups/kimlab/exoTIC-biomarkers/figures'
-exotic: SCRIPTS = '/public/groups/kimlab/exoTIC-biomarkers/scripts'
+exotic: DATA = '/public/groups/kimlab/exoTIC-biomarkers/data:/home/${USER}/data'
+exotic: NOTEBOOKS = '/public/groups/kimlab/exoTIC-biomarkers/notebooks:/home/${USER}/notebooks'
+exotic: FIGURES = '/public/groups/kimlab/exoTIC-biomarkers/figures:/home/${USER}/figures'
+exotic: SCRIPTS = '/public/groups/kimlab/exoTIC-biomarkers/scripts:/home/${USER}/scripts'
 exotic: USER_ID = $(shell id -u)
 exotic:
 	@echo 'making rstudio session hosted at 127 0 0 1 8383 8383 for ${USER}:${USER_ID}'
-	docker run --rm -p 0.0.0.0:8282:8282 -e DISABLE_AUTH=true\
+	docker run --rm -p 127.0.0.1:4848:8787 -e DISABLE_AUTH=true\
 		-e USER=${USER} -e USERID=${USER_ID}\
 		-v ${DATA}\
 		-v ${NOTEBOOKS}\
 		-v ${FIGURES}\
 		-v ${SCRIPTS}\
-		rreggiar/tidyr-studio:latest
+		rreggiar/tidyr-studio
 
 rstudio:
 	@echo 'making rstudio session hosted at 127 0 0 1 8787 8787 for ${USER}:${USER_ID}'
