@@ -88,6 +88,27 @@ aale_resub:
 		-v ${OUTPUT}\
 		tidyr-studio:4.0.aale_resub
 
+aale_resub_scanpy: DATA = '/public/groups/kimlab/aale-KRAS-G12-transformation/data:/home/${USER}/data'
+aale_resub_scanpy: NOTEBOOKS = '/public/groups/kimlab/aale-KRAS-G12-transformation/notebooks:/home/${USER}/notebooks'
+aale_resub_scanpy: FIGURES = '/public/groups/kimlab/aale-KRAS-G12-transformation/figures:/home/${USER}/figures'
+aale_resub_scanpy: BIN = '/public/groups/kimlab/aale-KRAS-G12-transformation/bin:/home/${USER}/bin'
+aale_resub_scanpy: R = '/public/groups/kimlab/aale-KRAS-G12-transformation/R:/home/${USER}/R'
+aale_resub_scanpy: REFERENCE = '/public/groups/kimlab/genomes.annotations/gencode.35:/home/$(USER)/reference'
+aale_resub_scanpy: USER_ID = $(shell id -u)
+aale_resub_scanpy: OUTPUT = '/public/groups/kimlab/aale-KRAS-G12-transformation/output.data:/home/${USER}/output.data'
+aale_resub_scanpy:
+	@echo 'making rstudio session hosted at 127 0 0 1 2828 8787 for ${USER}:${USER_ID}'
+	docker run --rm -p 127.0.0.1:4848:8787 -e DISABLE_AUTH=true\
+		-e USER=${USER} -e USERID=${USER_ID} --detach\
+		-v ${DATA}\
+		-v ${NOTEBOOKS}\
+		-v ${FIGURES}\
+		-v ${BIN}\
+		-v ${R}\
+		-v ${REFERENCE}\
+		-v ${OUTPUT}\
+		imperialgenomicsfacility/scanpy-notebook-image:latest
+
 
 
 #exotic: DATA = '/public/groups/kimlab/exoTIC-biomarkers/data:/home/${USER}/data'
