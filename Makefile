@@ -98,8 +98,8 @@ aale_resub_scanpy: USER_ID = $(shell id -u)
 aale_resub_scanpy: OUTPUT = '/public/groups/kimlab/aale-KRAS-G12-transformation/output.data:/home/${USER}/output.data'
 aale_resub_scanpy:
 	@echo 'making rstudio session hosted at 127 0 0 1 2828 8787 for ${USER}:${USER_ID}'
-	docker run --rm -p 127.0.0.1:4848:8888 -e DISABLE_AUTH=true\
-		-e USER=${USER} -e USERID=${USER_ID} --detach\
+	docker run --rm -p 127.0.0.1:4848:8888 -u $(shell id -u):$(shell id -g) \
+		-e JUPYTER_TOKEN='token' --detach\
 		-v ${DATA}\
 		-v ${NOTEBOOKS}\
 		-v ${FIGURES}\
